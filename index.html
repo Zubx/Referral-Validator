@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Code Validation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Referral Code Validation</h1>
+    <div>
+        <h2>Check Referrer Code</h2>
+        <input type="text" id="checkReferrerInput" placeholder="Enter Referrer Code">
+        <button onclick="checkReferrer()">Check</button>
+        <p id="checkReferrerResult"></p>
+    </div>
+    <div>
+        <h2>Add New Referrer</h2>
+        <input type="text" id="newReferrerInput" placeholder="Enter New Referrer Code">
+        <button onclick="addReferrer()">Add</button>
+        <p id="addReferrerResult"></p>
+    </div>
+    <div>
+        <h2>Add New Referred</h2>
+        <input type="text" id="newReferredInput" placeholder="Enter New Referred Code">
+        <button onclick="addReferred()">Add</button>
+        <p id="addReferredResult"></p>
+    </div>
+    <div>
+        <h2>Check Referred Code</h2>
+        <input type="text" id="checkReferredInput" placeholder="Enter Referred Code">
+        <button onclick="checkReferred()">Check</button>
+        <p id="checkReferredResult"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
