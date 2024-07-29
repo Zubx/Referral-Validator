@@ -5,100 +5,88 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
+    <style>
+      #message {
+        display: none;
+        margin: 20px;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 4px;
+        border-color: sandybrown;
+      }
+      .logo-container {
+        display: flex;
+        align-items: left;
+        justify-content: center;
+        margin-bottom: 20px; /* Space between logo and title */
+      }
+      .logo-container img {
+        height: 50px; /* Adjust size of logo */
+        margin-right: 20px; /* Space between logo and title */
+      }
+      .hero {
+        margin-bottom: 20px; /* Space between hero section and form */
+      }
+    </style>
   </head>
   <body>
     <section class="hero is-primary is-bold">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">Data Entry Form</h1>
+          <div class="logo-container">
+            <img src="https://down-id.img.susercontent.com/file/ce52105acec20cf0c54bcb7aef715a2a" alt="Company Logo" />
+            <h1 class="title">Formulir Validasi Member Get Member</h1>
+          </div>
         </div>
       </div>
     </section>
-    <form id="form" class="container m-4 pl-4" method="POST">
+
+    <div class="container has-text-centered">
+      <a href="YOUR_REDIRECT_URL_HERE" class="button is-info">Halaman Tambah Calo</a>
+    </div>
+
+    <form id="form" class="container m-4 pl-4">
       <div class="field">
-        <label class="label">Client Name</label>
+        <label class="label">Nama Pembeli Bawaan</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="Your Client Name"
+            placeholder="Masukkan Nama Lengkap Pembeli Bawaan"
             name="Client Name"
+            required
           />
         </div>
       </div>
 
-      <!-- <div class="field">
-        <label class="label">Last Name</label>
+      <div class="field">
+        <label class="label">Kode G No. Telp Calo</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="Your Last Name"
-            name="Last Name"
+            placeholder="Masukkan Nomor Wa dengan mengganti + dengan G (e.g., G62xxxxxxxxx)"
+            name="Phone Number"
+            required
           />
         </div>
-      </div> -->
+      </div>
 
       <div class="field">
-        <label class="label">Email</label>
+        <label class="label">Kode C No. Telp Pembeli</label>
         <div class="control">
           <input
             class="input"
-            type="email"
-            placeholder="Your Email"
-            name="Email"
+            type="text"
+            placeholder="Masukkan Nomor Wa dengan mengganti + dengan C (e.g., C62xxxxxxxxx)"
+            name="Client Phone Number"
+            required
           />
         </div>
       </div>
 
       <div class="field">
-        <label class="label">Password</label>
-        <div class="control">
-          <input
-            class="input"
-            type="password"
-            placeholder="Your Password"
-            name="Password"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Date of Birth</label>
-        <div class="control">
-          <input
-            class="input"
-            type="date"
-            placeholder="Your Date of Birth"
-            name="DOB"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Gender</label>
-        <div class="control">
-          <label class="radio">
-            <input type="radio" name="Gender" value="male" /> Male
-          </label>
-          <label class="radio">
-            <input type="radio" name="Gender" value="female" /> Female
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Agree to Terms</label>
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" name="Agree To Terms" value="yes" /> I agree
-            to the terms and conditions
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Additional Information</label>
+        <label class="label">Informasi Tambahan</label>
         <div class="control">
           <textarea
             class="textarea"
@@ -111,85 +99,62 @@
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-primary" type="submit" id="submit-button">
-            Sign Up
+            Tambahkan
           </button>
         </div>
         <div class="control">
-          <button class="button is-danger">Cancel</button>
+          <button class="button is-danger" type="button" onclick="document.getElementById('form').reset();">
+            Cancel
+          </button>
         </div>
       </div>
     </form>
-    <div
-      id="message"
-      style="
-        display: none;
-        margin: 20px;
-        font-weight: bold;
-        color: green;
-        padding: 8px;
-        background-color: beige;
-        border-radius: 4px;
-        border-color: aquamarine;
-      "
-    ></div>
+    <div id="message"></div>
 
     <script>
       document.getElementById("form").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
-        document.getElementById("message").textContent = "Submitting..";
-        document.getElementById("message").style.display = "block";
+        e.preventDefault();
+        const messageElem = document.getElementById("message");
+        messageElem.textContent = "Submitting...";
+        messageElem.style.display = "block";
         document.getElementById("submit-button").disabled = true;
 
-        // Collect the form data
         var formData = new FormData(this);
         var keyValuePairs = [];
         for (var pair of formData.entries()) {
-          keyValuePairs.push(pair[0] + "=" + pair[1]);
+          keyValuePairs.push(pair[0] + "=" + encodeURIComponent(pair[1]));
         }
 
         var formDataString = keyValuePairs.join("&");
 
-        // Send a POST request to your Google Apps Script
-        fetch(
-          "https://script.google.com/macros/s/AKfycbwYk8bIyPBNARHAGXceWtsdSQrrr8PdRoh3ZedYBWDhP9R1ufRRcpHu2RIR2dAG3B88qg/exec",
-          {
-            redirect: "follow",
-            method: "POST",
-            body: formDataString,
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8",
-            },
-          }
-        )
-          .then(function (response) {
-            // Check if the request was successful
-            if (response) {
-              return response; // Assuming your script returns JSON response
-            } else {
-              throw new Error("Failed to submit the form.");
+        fetch("https://script.google.com/macros/s/AKfycbwpQFWoTty13PVmNzNqdXZ097z7Kd25ZTART2rszMdCx5oUtzpVxIL-L03kiVNDhEld/exec", {
+          method: "POST",
+          body: formDataString,
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              throw new Error(data.error);
             }
-          })
-          .then(function (data) {
-            // Display a success message
-            document.getElementById("message").textContent =
-              "Data submitted successfully!";
-            document.getElementById("message").style.display = "block";
-            document.getElementById("message").style.backgroundColor = "green";
-            document.getElementById("message").style.color = "beige";
+            messageElem.textContent = "Data submitted successfully!";
+            messageElem.style.backgroundColor = "green";
+            messageElem.style.color = "beige";
             document.getElementById("submit-button").disabled = false;
             document.getElementById("form").reset();
-
-            setTimeout(function () {
-              document.getElementById("message").textContent = "";
-              document.getElementById("message").style.display = "none";
+            setTimeout(() => {
+              messageElem.textContent = "";
+              messageElem.style.display = "none";
             }, 2600);
           })
-          .catch(function (error) {
-            // Handle errors, you can display an error message here
+          .catch(error => {
             console.error(error);
-            document.getElementById("message").textContent =
-              "An error occurred while submitting the form.";
-            document.getElementById("message").style.display = "block";
+            messageElem.textContent = error.message;
+            messageElem.style.backgroundColor = "red";
+            messageElem.style.color = "white";
+            document.getElementById("submit-button").disabled = false;
           });
       });
     </script>
